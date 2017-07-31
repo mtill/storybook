@@ -1,7 +1,7 @@
 # storybook
 generates fancy storybooks -- all based on static HTML files
 
-[Demo](https://mtill.github.io/storybook/Demo/index.html)
+[Demo](https://mtill.github.io/storybook/demo/index.html)
 
 
 ## how to install
