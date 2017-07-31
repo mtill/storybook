@@ -1,6 +1,9 @@
 # storybook
 generates fancy storybooks -- all based on static HTML files
 
+[demo/index.html](Demo)
+
+
 ## how to install
 download jquery from [http://jquery.com](http://jquery.com) and copy the jquery file to the storybook folder (filename: jquery.min.js)
 
