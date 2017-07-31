@@ -106,7 +106,9 @@ def doResize(im, maxWidth, maxHeight, resultFilename):
 def createStorybook(folder, recursive, parent=None, languageCode='en'):
     languageStrings = loadLanguageFile(languageCode)
 
-    thePath = os.path.basename(os.path.dirname(folder))
+    if folder.endswith("/"):
+        folder = folder[0:len(folder)-1]
+    thePath = os.path.basename(folder)
     #storybookDir = os.path.join(os.path.abspath(os.path.join(folder, os.pardir)), thePath + "-storybook")
     storybookDir = thePath + "-storybook"
     _createStorybook(storybookDir, thePath, folder, recursive, parent, languageStrings, 0)
