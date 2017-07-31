@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
-<title>DemoImages -- storybook</title>
+<title>DemoImages/More pictures in a subfolder -- storybook</title>
 <style>
  a {
   font-size:16pt;
@@ -55,7 +55,7 @@
   opacity: 0.2;
  }
 </style>
-<script type="text/javascript" src="jquery.min.js"></script>
+<script type="text/javascript" src="../jquery.min.js"></script>
 <script type="text/javascript">
 var slideshowFunction = null;
 var slideshowRunning = false;
@@ -136,7 +136,7 @@ function showImage(currobj, preloadOnly) {
 
   $('.bigimage').removeAttr('src').remove();
   if (isMovie) {
-   var bigimage = $('<video type="video/mp4" class="bigimage" poster="Movie-file-thumbnail.png" controls autoplay class="bigimage" src="' + currobjsrc + '">');
+   var bigimage = $('<video type="video/mp4" class="bigimage" poster="../Movie-file-thumbnail.png" controls autoplay class="bigimage" src="' + currobjsrc + '">');
   } else {
    var bigimage = $('<img class="bigimage" src="' + currobjsrc + '" title="click to close">');
    bigimage.on('click', function() {
@@ -247,15 +247,11 @@ $(document).ready(function() {
 </script>
 </head>
 <body>
-<div class="card" style="text-align:right"><a href="DemoImages.zip">download folder</a></div><div class="card">folder structure:<br><ul><li><a href="More pictures in a subfolder/index.html">More pictures in a subfolder</a></li>
+<div class="card" style="text-align:right"><a href="More pictures in a subfolder.zip">download folder</a></div><div class="card">folder structure:<br><ul><li><a href="../index.html">[parent folder]</a></li>
 </ul></div>
 
 <div class="card">2017-07-31<br>
-<img class="thumb showtitle" showtitle="running the storybook script" title="running the storybook script (11:46:51)" src="thumbnails/step01.png">
-<img class="thumb showtitle" showtitle="output of the storybook script" title="output of the storybook script (11:51:52)" src="thumbnails/step02.png">
-<img class="thumb showtitle" showtitle="opening the storybook html page" title="opening the storybook html page (11:52:13)" src="thumbnails/step03.png">
-<img class="thumb showtitle" showtitle="This shows the directory index of the folder containing all the images." title="This shows the directory index of the folder containing all the images. (11:54:56)" src="thumbnails/step00-dirindex.png">
-<img class="thumb" title="12:09:02" src="thumbnails/step00-aindextxt.png">
+<img class="thumb" title="13:27:51" src="thumbnails/Screenshot_2017-07-31_13-27-29.png">
 </div>
 
 <div id="container"></div>
