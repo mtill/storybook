@@ -1,0 +1,269 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<title>%TITLE% -- %T_STORYBOOK%</title>
+<style>
+ a {
+  font-size:16pt;
+ }
+ .bigimage {
+   position:fixed;
+   left:0;
+   right:0;
+   bottom:0;
+   margin:auto;
+   top:0;
+   max-width:100%;
+   max-height:100%;
+   cursor: pointer;
+   z-index: 9997;
+ }
+ .infoBox {
+  position:fixed;
+  color:black;
+  font-size:18pt;
+  background-color:#b9b9b9;
+  padding:10px;
+  border-radius:7px;
+  box-shadow: 2px 4px 8px 2px rgba(0, 0, 0, 0.2);
+ }
+ .infoBox #optionsBoxHeader {
+  font-size:24pt;
+ }
+ .infoBox a {
+  color:black;
+  font-size:18pt;
+  text-decoration:none;
+  padding: 0px;
+ }
+ #optionsDetails {
+  font-size:18pt;
+ }
+ img.thumb, img.thumbmovie {
+  margin: 2px;
+  cursor: pointer;
+ }
+ .card {
+  box-shadow: 2px 4px 8px 2px rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+  padding: 10px;
+  background: #D3D3D3;
+  font-weight: bold;
+  font-size: 16pt;
+  margin: 20pt;
+  opacity: 0.2;
+ }
+</style>
+<script type="text/javascript" src="%RELATIVE_PATH%jquery.min.js"></script>
+<script type="text/javascript">
+var slideshowFunction = null;
+var slideshowRunning = false;
+var slideshowSpeed = 10;
+var closeInfoShown = false;
+var posImages = 0;
+var theInfoBoxTimer = null;
+var cardsHidden = false;
+
+function hideTheInfoBox() {
+  if (theInfoBoxTimer != null) {
+    clearTimeout(theInfoBoxTimer);
+    theInfoBoxTimer = null;
+  }
+  $('#theInfoBox').stop(true, true).hide();
+}
+
+function showTheInfoBox(showms, hidems) {
+  if (theInfoBoxTimer != null) {
+    clearTimeout(theInfoBoxTimer);
+  }
+  if (showms == 0) {
+    $('#theInfoBox').show();
+    theInfoBoxTimer = setTimeout(function() {
+      $('#theInfoBox').hide('slow');
+    }, hidems);
+  } else {
+    theInfoBoxTimer = setTimeout(function() {
+      $('#theInfoBox').show();
+      theInfoBoxTimer = setTimeout(function() {
+        $('#theInfoBox').hide('slow');
+      }, hidems);
+    }, showms);
+  }
+}
+
+function goNextImage() {
+ nextImage(true);
+}
+
+function nextImage(isNext) {
+  if (slideshowFunction != null) {
+    clearTimeout(slideshowFunction);
+  }
+  hideTheInfoBox();
+
+  if (!cardsHidden) {
+    $('.card').css("opacity", "0.2");
+    cardsHidden = true;
+  }
+
+  if (!isNext) {
+    posImages = (posImages - 2) % $('.thumb').length;
+  }
+
+  var currobj = $('.thumb').eq(posImages);
+  showImage(currobj, false);
+
+  posImages = (posImages + 1) % $('.thumb').length;
+
+  showImage($('.thumb').eq(posImages), true);
+}
+
+function showImage(currobj, preloadOnly) {
+  var currobjsrc = "";
+  var isMovie = false;
+  if (currobj.hasClass('movie')) {
+    currobjsrc = 'preview/' + currobj.attr('themovie');
+    isMovie = true;
+  } else {
+    currobjsrc = currobj.attr('src').replace('thumbnails/', 'preview/');
+  }
+
+  if (preloadOnly) {
+    $('#slideshowPreload').attr('src', currobjsrc);
+    return;
+  }
+
+  $('.bigimage').removeAttr('src').remove();
+  if (isMovie) {
+   var bigimage = $('<video type="video/mp4" class="bigimage" poster="%RELATIVE_PATH%Movie-file-thumbnail.png" controls autoplay class="bigimage" src="' + currobjsrc + '">');
+  } else {
+   var bigimage = $('<img class="bigimage" src="' + currobjsrc + '" title="%T_CLICK_TO_CLOSE%">');
+   bigimage.on('click', function() {
+      if (slideshowRunning) {
+        stopSlideshow();
+        $('#theInfoBox').stop(true, true).html("%T_CLICK_AGAIN_TO_CLOSE%");
+	showTheInfoBox(0, 5000);
+      } else {
+        $('.bigimage').removeAttr('src').remove();
+        $('.card').css("opacity", "1.0");
+	cardsHidden = false;
+        $('#theInfoBox').stop(true, true).hide();
+      }
+    });
+
+    if (currobj.hasClass('showtitle')) {
+      var disappearInSeconds = 10;
+      if (slideshowRunning && slideshowSpeed < disappearInSeconds) {
+        disappearInSeconds = slideshowSpeed;
+      }
+      $('#theInfoBox').html(currobj.attr('showtitle'));
+      showTheInfoBox(0, disappearInSeconds * 1000);
+    } else {
+      if (!closeInfoShown) {
+        $('#theInfoBox').html("%T_CLICK_TO_CLOSE%");
+	showTheInfoBox(0, 5000);
+        closeInfoShown = true;
+      }
+    }
+  }
+  $('#container').prepend(bigimage);
+
+  if (slideshowRunning) {
+    if (isMovie) {
+     bigimage.on('ended error', function() {
+       slideshowFunction = setTimeout(goNextImage, 2000);
+     });
+    } else {
+      slideshowFunction = setTimeout(goNextImage, slideshowSpeed * 1000);
+    }
+  }
+
+  return bigimage;
+}
+
+function decreaseSpeed() {
+  slideshowSpeed = slideshowSpeed - 5;
+  if (slideshowSpeed < 5) {
+    slideshowSpeed = 5;
+  }
+  $('#slideshowSpeedValue').text(slideshowSpeed);
+}
+
+function increaseSpeed() {
+  slideshowSpeed = slideshowSpeed + 5;
+  $('#slideshowSpeedValue').text(slideshowSpeed);
+}
+
+function startSlideshow() {
+  $('#slideshowStartLink').text('%T_STOP_SLIDESHOW%');
+  slideshowRunning = true;
+  if (slideshowFunction != null) {
+    clearTimeout(slideshowFunction);
+  }
+  $('#optionsDetails').hide();
+
+  nextImage(true);
+}
+
+function toggleSlideshow() {
+  if (slideshowRunning) {
+    stopSlideshow();
+  } else {
+    startSlideshow();
+  }
+}
+
+function stopSlideshow() {
+  slideshowRunning = false;
+  clearTimeout(slideshowFunction);
+  slideshowFunction = null;
+  $('#slideshowStartLink').text('%T_START_SLIDESHOW%');
+}
+
+function toggleOptions() {
+  $('#optionsDetails').toggle();
+}
+
+$(document).ready(function() {
+  $('.card').css("opacity", "1.0");
+  $('#theInfoBox').on('click', function() {
+    $(this).stop(true, true).hide();
+  });
+  $('#theInfoBox').hide();
+
+  $('#slideshowSpeedValue').text(slideshowSpeed);
+
+  $('.thumb').on('click', function() {
+    if (slideshowRunning) {
+      stopSlideshow();
+    }
+    posImages = $('.thumb').index($(this));
+
+    nextImage(true);
+  });
+
+});
+</script>
+</head>
+<body>
+%CONTENT%
+<div id="container"></div>
+<div id="theInfoBox" class="infoBox" style="bottom:5%;left:5%;z-index:9999;cursor:pointer">%T_PLEASE_WAIT%</div>
+
+<div id="optionsBox" class="infoBox" style="left:0px;top:0px;opacity:1;z-index:9998"><a id="optionsBoxHeader" href="javascript:toggleOptions()">%T_OPTIONS%</a><br>
+ <div id="optionsDetails" style="display:none">
+  <p style="text-align:center">
+   <a style="font-size: 22pt" href="javascript:nextImage(false)">&larr; %T_PREVIOUS%</a>
+   <a style="font-size: 22pt;margin-left:16px" href="javascript:nextImage(true)">%T_NEXT% &rarr;</a><br>
+  </p>
+  <a style="font-size: 22pt" href="javascript:toggleSlideshow()" id="slideshowStartLink">%T_START_SLIDESHOW%</a><br>
+  %T_SLIDESHOW_SPEED%: <a title="%T_SLIDESHOW_FASTER%" href="javascript:decreaseSpeed()">&minus;</a> <span id="slideshowSpeedValue">10</span>s <a title="%T_SLIDESHOW_SLOWER%" href="javascript:increaseSpeed()">&plus;</a>
+ </div>
+</div>
+<img id="slideshowPreload" style="display:none">
+<div id="credits"><a href="https://github.com/mtill/storybook" target="_blank" style="color:#D3D3D3;font-size:12pt;text-decoration:none">%T_MADE_WITH_STORYBOOK%, &copy; mtill, 2017</a></div>
+
+</body>
+</html>
+

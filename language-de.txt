@@ -1,0 +1,17 @@
+%T_OPTIONS% Optionen
+%T_CLICK_TO_CLOSE% Bild anklicken zum Schließen
+%T_CLICK_AGAIN_TO_CLOSE% Slideshow angehalten; nochmals klicken zum Schließen
+%T_STORYBOOK% Bilderbuch
+%T_STOP_SLIDESHOW% Slideshow anhalten
+%T_START_SLIDESHOW% Slideshow starten
+%T_PLEASE_WAIT% Bitte warten ...
+%T_PREVIOUS% zurück
+%T_NEXT% weiter
+%T_SLIDESHOW_SPEED% Geschwindigkeit
+%T_SLIDESHOW_FASTER% schneller
+%T_SLIDESHOW_SLOWER% langsamer
+%T_DOWNLOAD_THIS_FOLDER% Dieses Verzeichnis herunterladen
+%T_FOLDER_CONTENTS% Verzeichnisstruktur
+%T_PARENT_DIR% &uuml;bergeordnetes Verzeichnis
+%T_DOWNLOAD_THIS_FOLDER% Dieses Verzeichnis herunterladen
+%T_MADE_WITH_STORYBOOK% Mit storybook erstellt

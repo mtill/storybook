@@ -1,0 +1,17 @@
+%T_OPTIONS% Options
+%T_CLICK_TO_CLOSE% click to close
+%T_CLICK_AGAIN_TO_CLOSE% slideshow stopped; click to close
+%T_STORYBOOK% storybook
+%T_STOP_SLIDESHOW% stop slideshow
+%T_START_SLIDESHOW% start slideshow
+%T_PLEASE_WAIT% please wait ...
+%T_PREVIOUS% previous
+%T_NEXT% next
+%T_SLIDESHOW_SPEED% speed
+%T_SLIDESHOW_FASTER% faster
+%T_SLIDESHOW_SLOWER% slower
+%T_DOWNLOAD_THIS_FOLDER% download this folder
+%T_FOLDER_CONTENTS% folder structure
+%T_PARENT_DIR% parent folder
+%T_DOWNLOAD_THIS_FOLDER% download folder
+%T_MADE_WITH_STORYBOOK% made with storybook
