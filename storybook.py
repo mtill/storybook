@@ -106,7 +106,7 @@ def doResize(im, maxWidth, maxHeight, resultFilename):
 def createStorybook(folder, recursive, parent=None, languageCode='en'):
     languageStrings = loadLanguageFile(languageCode)
 
-    thePath = os.path.basename(folder)
+    thePath = os.path.basename(os.path.dirname(folder))
     #storybookDir = os.path.join(os.path.abspath(os.path.join(folder, os.pardir)), thePath + "-storybook")
     storybookDir = thePath + "-storybook"
     _createStorybook(storybookDir, thePath, folder, recursive, parent, languageStrings, 0)
@@ -184,8 +184,10 @@ def _createStorybook(storybookDir, thePath, folder, recursive, parent, languageS
                                 print("INFO: image rotated")
                             elif exifInfo[274] == 6:
                                 im = im.rotate(270, expand=True)
+                                print("INFO: image rotated")
                             elif exifInfo[274] == 8:
                                 im = im.rotate(90, expand=True)
+                                print("INFO: image rotated")
 
                 theThumbnailFile = os.path.join(theThumbnailFolder, file)
                 doResize(im, maxPreviewWidth, maxPreviewHeight, theThumbnailFile)
